@@ -1,0 +1,41 @@
+N = 8
+
+def print_board(board):
+    for i in range(N):
+        for j in range(N):
+            if board[i] == j:
+                print("Q", end=" ")
+            else:
+                print(".", end=" ")
+        print()
+
+def safe(board, row, col):
+    for i in range(row):
+        if board[i] == col or abs(board[i] - col) == abs(i - row):
+            return False
+    return True
+
+def solve(board, row):
+    if row == N:
+        return True
+
+    for col in range(N):
+        if safe(board, row, col):
+            print("Placing Queen at row:", row+1, "column:", col+1)
+            board[row] = col
+
+            if solve(board, row+1):
+                return True
+
+            board[row] = -1
+            print("Backtracking from row:", row+1, "column:", col+1)
+
+    return False
+
+board = [-1] * N
+
+if solve(board, 0):
+    print("\nFinal Board:")
+    print_board(board)
+else:
+    print("Cannot Place")
