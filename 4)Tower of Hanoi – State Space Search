@@ -1,0 +1,43 @@
+from collections import deque
+
+def solve(n):
+    start = (tuple(range(n, 0, -1)), (), ())
+    goal = ((), (), tuple(range(n, 0, -1)))
+
+    queue = deque([(start, [])])
+    visited = {start}
+
+    while queue:
+        state, moves = queue.popleft()
+
+        if state == goal:
+            return moves
+
+        for i in range(3):
+            if not state[i]:
+                continue
+
+            disk = state[i][-1]
+
+            for j in range(3):
+                if i == j:
+                    continue
+
+                if not state[j] or state[j][-1] > disk:
+                    pegs = [list(p) for p in state]
+                    pegs[i].pop()
+                    pegs[j].append(disk)
+                    new_state = tuple(tuple(p) for p in pegs)
+
+                    if new_state not in visited:
+                        visited.add(new_state)
+                        move = f"Move disk {disk} from {chr(65+i)} to {chr(65+j)}"
+                        queue.append((new_state, moves + [move]))
+
+n = int(input("Enter number of disks: "))
+answer = solve(n)
+
+for i, move in enumerate(answer, 1):
+    print(i, move)
+
+print("Total moves:", len(answer))
