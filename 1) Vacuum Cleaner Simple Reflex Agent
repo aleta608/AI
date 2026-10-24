@@ -1,0 +1,34 @@
+rooms = {
+    "A": "Dirty",
+    "B": "Dirty"
+}
+
+location = "A"
+
+while True:
+    if rooms[location] == "Dirty":
+        print("\nLocation:", location)
+        print("Percept:", location, "is Dirty")
+        print("Action: SUCK")
+
+        rooms[location] = "Clean"
+
+    else:
+        if location == "A":
+            print("\nLocation:", location)
+            print("Percept:", location, "is Clean")
+            print("Action: Move Right")
+
+            location = "B"
+
+        else:
+            print("\nLocation:", location)
+            print("Percept:", location, "is Clean")
+            print("Action: Move Left")
+
+            location = "A"
+
+    if rooms["A"] == "Clean" and rooms["B"] == "Clean":
+        print("\nBoth rooms are clean.")
+        print("Agent Goal Achieved.")
+        break
