@@ -1,0 +1,76 @@
+import heapq
+
+GOAL = (1, 2, 3, 4, 5, 6, 7, 8, 0)
+
+def heuristic(state):
+    distance = 0
+    for i, value in enumerate(state):
+        if value != 0:
+            goal = GOAL.index(value)
+            distance += abs(i // 3 - goal // 3)
+            distance += abs(i % 3 - goal % 3)
+    return distance
+
+def get_neighbors(state):
+    neighbors = []
+    zero = state.index(0)
+    row, col = zero // 3, zero % 3
+
+    for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+        r, c = row + dr, col + dc
+
+        if 0 <= r < 3 and 0 <= c < 3:
+            new = list(state)
+            index = r * 3 + c
+            new[zero], new[index] = new[index], new[zero]
+            neighbors.append(tuple(new))
+
+    return neighbors
+
+def print_puzzle(state):
+    for i in range(0, 9, 3):
+        print(state[i:i + 3])
+    print()
+
+def a_star(start):
+    queue = [(heuristic(start), 0, start)]
+    parent = {start: None}
+    cost = {start: 0}
+
+    while queue:
+        f, g, current = heapq.heappop(queue)
+
+        if current == GOAL:
+            path = []
+            while current is not None:
+                path.append(current)
+                current = parent[current]
+            return path[::-1]
+
+        for neighbor in get_neighbors(current):
+            new_g = g + 1
+
+            if neighbor not in cost or new_g < cost[neighbor]:
+                cost[neighbor] = new_g
+                parent[neighbor] = current
+                f = new_g + heuristic(neighbor)
+                heapq.heappush(queue, (f, new_g, neighbor))
+
+    return None
+
+start = (1, 2, 3, 4, 0, 6, 7, 5, 8)
+
+print("Initial State:")
+print_puzzle(start)
+
+solution = a_star(start)
+
+if solution:
+    print("Solution Found!")
+    print("Number of Moves:", len(solution) - 1)
+
+    for step, state in enumerate(solution):
+        print("Step", step)
+        print_puzzle(state)
+else:
+    print("No solution exists.")
