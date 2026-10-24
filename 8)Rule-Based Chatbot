@@ -1,0 +1,33 @@
+print("Welcome to Shopping Chatbot!")
+print("Type 'bye' to exit.")
+
+while True:
+    user = input("You: ").lower()
+
+    if user == "bye":
+        print("Bot: Goodbye!")
+        break
+
+    elif "hello" in user or "hi" in user:
+        print("Bot: Hello! How can I help?")
+
+    elif "order" in user:
+        print("Bot: Track your order using order ID.")
+
+    elif "delivery" in user:
+        print("Bot: Delivery takes 3-5 days.")
+
+    elif "return" in user:
+        print("Bot: Return your product within 7 days.")
+
+    elif "payment" in user:
+        print("Bot: We accept UPI and cards.")
+
+    elif "cancel" in user:
+        print("Bot: Cancel your order from My Orders.")
+
+    elif "thank" in user:
+        print("Bot: Welcome!")
+
+    else:
+        print("Bot: Sorry, please try again.")
