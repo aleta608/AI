@@ -1,0 +1,102 @@
+from collections import deque
+
+grid = [
+    ['S', '.', '.', '#', '.'],
+    ['#', '#', '.', '#', '.'],
+    ['.', '.', '.', '.', '.'],
+    ['.', '#', '#', '#', '.'],
+    ['.', '.', '.', '.', 'G']
+]
+
+start = (0, 0)
+goal = (4, 4)
+
+class Agent:
+    def __init__(self):
+        self.position = start
+        self.internal_map = {}
+        self.path = [start]
+        self.visited = set()
+
+    def perceive(self):
+        r, c = self.position
+
+        for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+            nr, nc = r + dr, c + dc
+
+            if 0 <= nr < 5 and 0 <= nc < 5:
+                self.internal_map[(nr, nc)] = grid[nr][nc]
+
+        self.internal_map[self.position] = grid[r][c]
+
+    def find_path(self):
+        q = deque([(self.position, [self.position])])
+        seen = {self.position}
+
+        while q:
+            pos, path = q.popleft()
+
+            if pos == goal:
+                return path
+
+            r, c = pos
+
+            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                nr, nc = r + dr, c + dc
+                new = (nr, nc)
+
+                if (0 <= nr < 5 and 0 <= nc < 5
+                    and new not in seen
+                    and self.internal_map.get(new, '#') != '#'):
+
+                    seen.add(new)
+                    q.append((new, path + [new]))
+
+        return None
+
+    def run(self):
+        while self.position != goal:
+            self.perceive()
+            print("Internal State:", self.internal_map)
+
+            path = self.find_path()
+
+            if not path:
+                print("No path found")
+                return
+
+            new = path[1]
+            r, c = self.position
+            nr, nc = new
+
+            if nr < r:
+                action = "UP"
+            elif nr > r:
+                action = "DOWN"
+            elif nc < c:
+                action = "LEFT"
+            else:
+                action = "RIGHT"
+
+            print("Current Position:", self.position)
+            print("Action:", action)
+
+            self.position = new
+            self.path.append(new)
+            self.visited.add(new)
+
+            print("New Position:", self.position)
+            print("----------------------")
+
+        print("Goal Reached!")
+        print("Goal Position:", goal)
+        print("Complete Path:", self.path)
+        print("Visited Cells:", self.visited)
+
+
+print("Grid Environment:")
+for row in grid:
+    print(" ".join(row))
+
+agent = Agent()
+agent.run()
