@@ -39,3 +39,48 @@ if solve(board, 0):
     print_board(board)
 else:
     print("Cannot Place")
+
+
+
+
+
+START
+
+N = 8
+Create BOARD of size N
+
+FUNCTION SAFE(BOARD, ROW, COL)
+    FOR I = 0 TO ROW - 1
+        IF BOARD[I] == COL
+            RETURN FALSE
+
+        IF ABS(BOARD[I] - COL) == ABS(I - ROW)
+            RETURN FALSE
+
+    RETURN TRUE
+
+
+FUNCTION SOLVE(BOARD, ROW)
+
+    IF ROW == N
+        RETURN TRUE
+
+    FOR COL = 0 TO N - 1
+
+        IF SAFE(BOARD, ROW, COL)
+            BOARD[ROW] = COL
+
+            IF SOLVE(BOARD, ROW + 1)
+                RETURN TRUE
+
+            BOARD[ROW] = -1
+
+    RETURN FALSE
+
+
+IF SOLVE(BOARD, 0)
+    PRINT BOARD
+ELSE
+    PRINT "Solution not found"
+
+STOP
