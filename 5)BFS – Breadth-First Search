@@ -48,3 +48,58 @@ if path[0] == start:
     print(path)
 else:
     print("No path found")
+
+
+
+
+START
+
+Create Grid
+Set Start Position
+Set Goal Position
+
+Create Queue
+Insert Start Position into Queue
+
+Mark Start as Visited
+Set Parent of Start = None
+
+WHILE Queue is not Empty
+
+    Remove Position from Queue
+
+    IF Position = Goal
+        BREAK
+    END IF
+
+    FOR each Direction (UP, DOWN, LEFT, RIGHT)
+
+        Find Neighbor Position
+
+        IF Neighbor is inside Grid
+           AND Neighbor is not Visited
+           AND Neighbor is not an Obstacle
+
+            Mark Neighbor as Visited
+            Set Parent of Neighbor = Current Position
+
+            Insert Neighbor into Queue
+
+        END IF
+
+    END FOR
+
+END WHILE
+
+IF Goal is not Reached
+    PRINT "NO PATH EXIST"
+
+ELSE
+    Trace Path from Goal to Start
+    Reverse Path
+
+    PRINT "PATH FOLLOWED BY ROBOT"
+    PRINT Path
+END IF
+
+STOP
