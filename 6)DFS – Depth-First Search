@@ -48,3 +48,25 @@ if path[0] == start:
     print(path)
 else:
     print("No path found")
+
+
+
+
+START
+
+1. Initialize STACK with start position
+2. Initialize VISITED as empty
+3. While STACK is not empty:
+      a. Remove the top element from STACK
+      b. If it is the GOAL:
+            Print "Goal Found"
+            STOP
+      c. If the position is not VISITED:
+            Mark it as VISITED
+            For each valid neighbor:
+                If neighbor is not VISITED:
+                    Push neighbor into STACK
+
+4. Print "Goal Not Found"
+
+STOP
