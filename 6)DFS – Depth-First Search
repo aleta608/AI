@@ -1,47 +1,50 @@
-def dfs(initial, goal):
-    stack = [(initial, [initial])]
-    visited = set()
+maze = [
+    ['S', '.', '#', '.'],
+    ['.', '.', '#', '.'],
+    ['#', '.', '.', '.'],
+    ['.', '#', '#', 'G']
+]
 
-    while stack:
-        state, path = stack.pop()
+start = (0, 0)
+goal = (3, 3)
 
-        if state == goal:
-            for step in path:
-                print(step)
-            return
+stack = [start]
+visited = set()
+parent = {start: None}
 
-        if state in visited:
-            continue
+directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
-        visited.add(state)
+while stack:
+    r, c = stack.pop()
 
-        for i in range(len(state)):
-            if not state[i]:
-                continue
+    if (r, c) == goal:
+        break
 
-            block = state[i][-1]
+    if (r, c) not in visited:
+        visited.add((r, c))
 
-            for j in range(len(state) + 1):
-                if i == j:
-                    continue
+        for dr, dc in directions:
+            nr = r + dr
+            nc = c + dc
 
-                new_state = [list(s) for s in state]
-                new_state[i].pop()
+            if (0 <= nr < 4 and 0 <= nc < 4 and
+                maze[nr][nc] != '#' and
+                (nr, nc) not in visited):
 
-                if j == len(state):
-                    new_state.append([block])
-                else:
-                    new_state[j].append(block)
+                stack.append((nr, nc))
+                parent[(nr, nc)] = (r, c)
 
-                new_state = tuple(tuple(s) for s in new_state if s)
+path = []
+node = goal
 
-                if new_state not in visited:
-                    stack.append((new_state, path + [new_state]))
+while node is not None:
+    path.append(node)
+    node = parent.get(node)
 
-    print("No solution found")
+path.reverse()
 
-
-initial = (('A', 'B'), ('C',))
-goal = (('A',), ('B', 'C'))
-
-dfs(initial, goal)
+if path[0] == start:
+    print("Path found:")
+    print(path)
+else:
+    print("No path found")
