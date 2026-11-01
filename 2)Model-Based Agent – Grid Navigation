@@ -100,3 +100,56 @@ for row in grid:
 
 agent = Agent()
 agent.run()
+
+
+START
+
+Create Grid
+Set Start Position = (0, 0)
+Set Goal Position = (4, 4)
+
+Create Agent
+
+Set Position = Start
+Set Internal Map = Empty
+Set Path = Start
+Set Visited = Empty
+
+WHILE Position is not Goal
+
+    PERCEIVE current position and nearby cells
+
+    UPDATE Internal Map
+
+    FIND path to Goal using BFS
+
+    IF no path found
+        PRINT "No path found"
+        STOP
+    END IF
+
+    SELECT next cell from path
+
+    DETERMINE action
+        UP
+        DOWN
+        LEFT
+        RIGHT
+
+    PRINT Current Position
+    PRINT Action
+
+    MOVE Agent to next cell
+
+    UPDATE Position
+    ADD Position to Path
+    ADD Position to Visited
+
+END WHILE
+
+PRINT "Goal Reached"
+PRINT Goal Position
+PRINT Complete Path
+PRINT Visited Cells
+
+STOP
