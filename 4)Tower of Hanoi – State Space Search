@@ -41,3 +41,55 @@ for i, move in enumerate(answer, 1):
     print(i, move)
 
 print("Total moves:", len(answer))
+
+
+
+
+START
+
+INPUT number of disks N
+
+Set Start State
+Set Goal State
+
+Create Queue
+Insert (Start State, Empty Path) into Queue
+
+Mark Start State as Visited
+
+WHILE Queue is not Empty
+
+    Remove State and Path from Queue
+
+    IF State = Goal State
+        RETURN Path
+    END IF
+
+    FOR each Peg A, B, C
+
+        IF Peg is not Empty
+
+            Select Top Disk
+
+            FOR each Other Peg
+
+                IF Move is Valid
+
+                    Create New State
+                    Move Disk to Other Peg
+
+                    IF New State is not Visited
+
+                        Mark New State as Visited
+
+                        Add (New State, Path + Move) to Queue
+
+                    END IF
+                END IF
+            END FOR
+        END IF
+    END FOR
+END WHILE
+PRINT Each Move
+PRINT Total Moves
+STOP
