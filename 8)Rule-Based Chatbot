@@ -1,33 +1,33 @@
-print("Welcome to Shopping Chatbot!")
-print("Type 'bye' to exit.")
+import random
+
+responses = {
+    'hello': ['hi', 'hello', 'hii'],
+    'order': ['You can order from order section'],
+    'refund': ['Refund will be given in 5 days'],
+    'cancel': ['Click cancel button'],
+    'bye': ['Goodbye!', 'bye!']
+}
+
+print("Say bye to exit")
 
 while True:
     user = input("You: ").lower()
 
-    if user == "bye":
-        print("Bot: Goodbye!")
+    if 'bye' in user:
+        print("AI:", random.choice(responses['bye']))
         break
 
-    elif "hello" in user or "hi" in user:
-        print("Bot: Hello! How can I help?")
+    elif 'hello' in user:
+        print("AI:", random.choice(responses['hello']))
 
-    elif "order" in user:
-        print("Bot: Track your order using order ID.")
+    elif 'order' in user:
+        print("AI:", random.choice(responses['order']))
 
-    elif "delivery" in user:
-        print("Bot: Delivery takes 3-5 days.")
+    elif 'refund' in user:
+        print("AI:", random.choice(responses['refund']))
 
-    elif "return" in user:
-        print("Bot: Return your product within 7 days.")
-
-    elif "payment" in user:
-        print("Bot: We accept UPI and cards.")
-
-    elif "cancel" in user:
-        print("Bot: Cancel your order from My Orders.")
-
-    elif "thank" in user:
-        print("Bot: Welcome!")
+    elif 'cancel' in user:
+        print("AI:", random.choice(responses['cancel']))
 
     else:
-        print("Bot: Sorry, please try again.")
+        print("No AI Response")
